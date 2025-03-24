@@ -47,6 +47,8 @@ export async function getData(latitude : number = 0, longitude : number = 0) : P
     params.longitude = longitude;
     const responses = await fetchWeatherApi(url, params);
 
+    console.log(`processing for lat: ${latitude} lon:${longitude}`);
+
     // Process first location. Add a for-loop for multiple locations or weather models
     const response = responses[0];
 
@@ -59,6 +61,7 @@ export async function getData(latitude : number = 0, longitude : number = 0) : P
     response.locationId
 
     const hourly = response.hourly()!;
+    const current = response.current()!;
 
     // Note: The order of weather variables in the URL query and the indices below need to match!
     const weatherDataArray : any = {

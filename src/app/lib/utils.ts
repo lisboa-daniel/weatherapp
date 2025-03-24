@@ -50,7 +50,10 @@ function getDaySufix(day : number){
 }
 
 export function getTodayFormated(){
-const today = getDateComponents();
+    const today = getDateComponents();
+    const todayDate = new Date();
 
-return today.dayOfWeek+", " + today.day + getDaySufix(today.day) + ' ' + today.month + ' ' + new Date().getHours() + ':' + new Date().getMinutes();
+    let minutes = (todayDate.getMinutes() >= 0 && todayDate.getMinutes() <= 9) ? `0${todayDate.getMinutes()}` : todayDate.getMinutes();
+
+    return today.dayOfWeek+", " + today.day + getDaySufix(today.day) + ' ' + today.month + ' ' + todayDate.getHours() + ':' + minutes; 
 }
