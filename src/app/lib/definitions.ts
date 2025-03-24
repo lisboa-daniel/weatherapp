@@ -1,3 +1,9 @@
+export interface WeatherPlace {
+    latitude: number | null;
+    longitude: number | null;
+    error: string | null;
+  }
+
 export type Weather = {
     time: Date[];
     temperature2m: number;
@@ -5,6 +11,14 @@ export type Weather = {
     weatherCode: number;
 }
 
+export type WeatherArray =  {
+    hourly: {
+        time: [],
+        temperature2m: Float32Array,
+        precipitation:  Float32Array,
+        weatherCode: Float32Array
+    }
+}
 
 export function NewWeather() : Weather{
     return {
@@ -16,3 +30,4 @@ export function NewWeather() : Weather{
         
     };
 }
+

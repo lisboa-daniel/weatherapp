@@ -4,8 +4,10 @@ import { Add, LocationOn, MoreVert, Thunderstorm } from "@mui/icons-material";
 import { Button, CircularProgress, Divider, Menu, MenuItem } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useWeather } from "./context/weatherContext";
-import { getData } from "./lib/actions";
+import { getLocNames, getData } from "./lib/actions";
 import { getWeatherIcon } from "./lib/weatherIcons";
+import { getDateComponents, getTodayFormated } from "./lib/utils";
+import { WeatherPlace } from "./lib/definitions";
 
 export default function Home() {
   const [sevendayForecasts, setSevendayForecasts] = useState(['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']);
@@ -15,21 +17,70 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true); // 🔹 Track loading state
   const [openMore, setOpenMore] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const today = getTodayFormated()
+  const [locName, setLocName] = useState<{city : string, country : string } | undefined> (undefined);
+
+  const [location, setLocation] = useState<WeatherPlace>({
+    latitude: null,
+    longitude: null,
+    error: null,
+  });
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
     setOpenMore(true);
   };
 
-  const loadWeather = async () => {
+  const loadWeather = async (latitude : number = 0, longitude : number=0) => {
     setIsLoading(true);
-    const fetchedData = await getData();
-    setData(fetchedData);
+    const fetchedData = await getData(latitude, longitude);
+    const fetchlocName = await getLocNames(latitude, longitude);
+
+
+    fetchedData.array.hourly.time.forEach((item: Date) => {
+      console.log(item.getHours());
+    });
+
+
+    
+    
+
+    setLocName(fetchlocName);
+    setData(fetchedData.data);
+
+    
     setIsLoading(false);
   };
 
   useEffect(() => {
-    loadWeather();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            error: null,
+          });
+
+          loadWeather(position.coords.latitude,position.coords.longitude );
+        },
+        (error) => {
+          setLocation({
+            latitude: null,
+            longitude: null,
+            error: error.message,
+          });
+        }
+      );
+    } else {
+      setLocation({
+        latitude: null,
+        longitude: null,
+        error: 'Geolocation is not supported by this browser.',
+      });
+    }
+
+    
   }, []);
 
   return (
@@ -42,7 +93,7 @@ export default function Home() {
         </Button>
         <div>
           <Button sx={{ borderRadius: '72px', height: '64px' }} onClick={(e) => handleClick(e)}>
-            <MoreVert className="text-[#38a592]" sx={{ width: '32px', height: '32px' }}/>
+            <MoreVert className="text-[#6ba198]" sx={{ width: '32px', height: '32px' }}/>
           </Button>
           <Menu anchorEl={anchorEl} open={openMore} onClose={() => setOpenMore(false)}>
             <MenuItem onClick={() => setOpenMore(false)}>Profile</MenuItem>
@@ -56,9 +107,13 @@ export default function Home() {
       <div id='cityInfo' className="flex flex-col">
         <span className="flex flex-row"> 
           <LocationOn className="text-[#38a592]" sx={{ width: '36px', height: '36px' }}/> 
-          <p className="text-[#38a592] text-3xl font-extrabold">Location</p>
+          <p className="text-[#38a592] text-3xl font-extrabold">{
+          
+          (locName==undefined) ? 'Searching...' : locName.city + ", " + locName.country
+          
+          }</p>
         </span>
-        <p className="text-[#38a592] text-xl">Friday, 21st March</p>
+        <p className="text-[#38a592] text-xl">{today}</p>
       </div>
 
 
@@ -74,7 +129,7 @@ export default function Home() {
               <p className="text-3xl font-extrabold bg-gradient-to-r from-[#078f76] via-[#16b194] to-[#2ee6c4] text-transparent bg-clip-text">
                 {getWeatherIcon(data.weatherCode).name}
               </p>
-              <img className="z-[2] absolute md:w-[8rem] w-[5rem] right-[15%] top-[35%] drop-shadow-lg" 
+              <img className="z-[2] md:w-[12rem] w-[8rem] right-[15%] top-[35%] drop-shadow-lg" 
                    src={`/icons/${getWeatherIcon(data.weatherCode).src}`} 
                    alt={getWeatherIcon(data.weatherCode).name}/>
             </span>
