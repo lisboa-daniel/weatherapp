@@ -14,6 +14,7 @@
     "@mui/icons-material": "^6.4.8",
     "@mui/material": "^6.4.8",
     "@mui/styled-engine-sc": "^6.4.6",
+    "@mui/x-charts": "^7.28.0",
     "@svgr/webpack": "^8.1.0",
     "next": "15.2.3",
     "openmeteo": "^1.2.0",

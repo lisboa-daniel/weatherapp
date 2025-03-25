@@ -27,6 +27,8 @@ const theme = createTheme ({
       main: '#a4c450',
     },
   },
+
+
 });
 
 export default function RootLayout({
@@ -37,12 +39,14 @@ export default function RootLayout({
   return (
     <WeatherProvider >
       <ThemeProvider theme={theme}>
-        <html lang="en">
-          <head >
-            <meta property="og:image" content={'/logo.svg'} />
-          </head>
-          <body className={normalFont.className + 'flex flex-col h-dvh'}>{children}</body>
-        </html>
+      <html lang="en"> 
+        <head>
+          <meta property="og:image" content={'/logo.svg'} />
+        </head>
+        <body className={`flex flex-col min-h-dvh overflow-y-hidden ${normalFont.className}`}>
+          {children}
+        </body>
+      </html>
       </ThemeProvider>
     </WeatherProvider>
   );
