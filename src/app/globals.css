@@ -1,4 +1,35 @@
 @import "tailwindcss";
+@theme {
+
+  --breakpoint-3xl: 1920px;
+  --color-secondary: oklch(52.4% 0.18662 14.966);
+  --color-secondary-50: oklch(73.433% 0.11909 6.34);
+  --color-secondary-100: oklch(69.885% 0.13919 7.0616);
+  --color-secondary-200: oklch(63.572% 0.17316 9.8134);
+  --color-secondary-300: oklch(58.559% 0.20071 13.841);
+  --color-secondary-400: oklch(52.4% 0.18662 14.966);
+  --color-secondary-500: oklch(42.697% 0.14917 14.15);
+  --color-secondary-600: oklch(32.411% 0.10883 13.477);
+  --color-secondary-700: oklch(21.356% 0.06344 10.529);
+  --color-secondary-800: oklch(4.2201% 0.01732 29.234);
+  --color-secondary-900: oklch(0% 0 none);
+  --color-secondary-950: oklch(0% 0 none);
+  --color-primary: oklch(48.112% 0.2404 291.82);
+  --color-primary-50: oklch(75.086% 0.11949 300.95);
+  --color-primary-100: oklch(70.921% 0.14081 300.63);
+  --color-primary-200: oklch(62.468% 0.18326 298.7);
+  --color-primary-300: oklch(54.647% 0.22022 295.76);
+  --color-primary-400: oklch(48.112% 0.2404 291.82);
+  --color-primary-500: oklch(40.292% 0.19684 292.56);
+  --color-primary-600: oklch(31.878% 0.15138 293.28);
+  --color-primary-700: oklch(23.275% 0.10187 294.94);
+  --color-primary-800: oklch(13.478% 0.04392 299.78);
+  --color-primary-900: oklch(0% 0 none);
+  --color-primary-950: oklch(0% 0 none);
+  --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+  --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
+  /* ... */
+}
 
 :root {
   --background: #ffffff;
@@ -15,7 +46,11 @@
 }*/
 
 body {
-  background: linear-gradient(#74ebd5, #ACB6E5);
+  background: linear-gradient(to bottom, 
+  #1b2141,
+  #483a92,
+  #7851ac,
+  #8e42ac);
   background-repeat: no-repeat;
   color: var(--foreground);
   

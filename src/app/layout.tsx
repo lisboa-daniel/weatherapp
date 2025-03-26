@@ -10,12 +10,12 @@ const normalFont = Poppins({weight: '400', subsets: ['latin-ext']});
 
 const theme = createTheme ({
   palette: {
-    mode: 'light',
+  
     primary: {
-      main: '#38a592',
+      main: '#6925D6',
     },
     secondary: {
-      main: '#f50057',
+      main: '#2BBDB0',
     },
     error: {
       main: '#b74a4a',
