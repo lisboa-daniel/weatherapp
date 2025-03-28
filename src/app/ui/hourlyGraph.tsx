@@ -25,7 +25,7 @@ export default function HourlyGraph() {
         }]}
         series={[{
           data: data.map(d => d.value),
-          color: '#521da6', // Customize line color
+          color: '#2c6ca4', // Customize line color
           area: true, // Enables the filled area below the line
         
           
