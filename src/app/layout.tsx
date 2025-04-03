@@ -41,7 +41,8 @@ export default function RootLayout({
       <ThemeProvider theme={theme}>
       <html lang="en"> 
         <head>
-          <meta property="og:image" content={'/logo.svg'} />
+          <meta property="og:image" content={'/logo.svg'} name="This is a weather app" />
+          <title>Weather App</title>
         </head>
         <body className={`flex flex-col min-h-dvh overflow-y-hidden ${normalFont.className}`}>
           {children}

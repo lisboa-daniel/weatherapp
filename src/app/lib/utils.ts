@@ -1,3 +1,5 @@
+import date from 'date-and-time';
+
 export function getDateComponents(date: Date = new Date()): {
     day: number;
     month: string;
@@ -5,7 +7,7 @@ export function getDateComponents(date: Date = new Date()): {
   } {
     const day = date.getDate();
     const nmonth = date.getMonth() + 1; // Months are zero-indexed
-    const dayOfWeekIndex = date.getDay();
+    const dayOfWeekIndex = date.getUTCDay();
    
     const daysOfWeek = [
       "Sunday",
@@ -46,15 +48,20 @@ function getDaySufix(day : number){
     else {
         if (day == 2) return 'nd';
         if (day == 1) return 'st';
+        else return 'rd';
     }
-}
+
+  }
 
 export function getTodayFormated(){
-    const today = getDateComponents();
-    const todayDate = new Date();
-    const minute = todayDate.getMinutes();
 
-    //let minutes = (minute >= 0 && minute <= 9) ? `0${minute}` : minute;
-    let minutes = 0;
-    return today.dayOfWeek+", " + today.day + getDaySufix(today.day) + ' ' + today.month + ' ' + todayDate.getHours() + ':' + minutes; 
+  const todayDate = new Date();
+
+
+  const today = getDateComponents();
+
+
+  //let minutes = (minute >= 0 && minute <= 9) ? `0${minute}` : minute;
+  let minutes = 0;
+  return today.dayOfWeek + ", " + today.day + getDaySufix(today.day) + ' ' + today.month + ' ' + date.format(todayDate, 'HH:mm', false); 
 }

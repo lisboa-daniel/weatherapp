@@ -41,8 +41,10 @@ const weatherIcons: Record<number, { src: string; name: string }> = {
 };
 
 // Function to get the weather icon & name safely
-export const getWeatherIcon = (code: number) => {
-  return weatherIcons[code] || { src: "umbrella.svg", name: "Unknown Weather" }; // Fallback
+export const getWeatherIcon = (code: number | undefined) => {
+  if (code)
+    return weatherIcons[code] || { src: "umbrella.svg", name: "Unknown Weather" }; // Fallback
+  return { src: "umbrella.svg", name: "Unknown Weather" }; 
 };
 
 export default weatherIcons;

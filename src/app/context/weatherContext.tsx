@@ -1,12 +1,12 @@
 'use client';
 
 import { createContext, useState, useContext, ReactNode } from 'react';
-import { NewWeather, Weather } from '@/app/lib/definitions';
+import { NewWeather, WeatherReadble } from '@/app/lib/definitions';
 
 // Define the type for the context value
 export interface WeatherContextType {
-  data: Weather ,
-  setData : (w: Weather) => void
+  data: WeatherReadble | undefined,
+  setData : (w: WeatherReadble | undefined) => void
 
 }
 
@@ -19,7 +19,7 @@ interface WeatherProviderProps {
 }
 
 export function WeatherProvider({ children }: WeatherProviderProps) {
-  const [data, setData] = useState<Weather>(NewWeather());
+  const [data, setData] = useState<WeatherReadble | undefined>(undefined);
 
 
   return (
