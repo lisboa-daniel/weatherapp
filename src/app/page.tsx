@@ -1,10 +1,10 @@
 'use client';
 
-import { Air, ArrowDropDownRounded, LocationOn, MoreVert, Thunderstorm, WaterDropOutlined } from "@mui/icons-material";
+import { Air, ArrowDropDownRounded, GpsFixed, GpsNotFixed, LocationOn, MoreVert, Thunderstorm, WaterDropOutlined } from "@mui/icons-material";
 import { Button, CircularProgress, Divider, Menu, MenuItem } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useWeather } from "./context/weatherContext";
-import { getGeoUsername, getLocNames,  getWeatherData } from "./lib/actions";
+import { getGeoUsername, getLocNames,  getUserLocation,  getWeatherData } from "./lib/actions";
 import { getWeatherIcon } from "./lib/weatherIcons";
 import { getTodayFormated } from "./lib/utils";
 import { City, WeatherPlace } from "./lib/definitions";
@@ -36,6 +36,45 @@ export default function Home() {
     longitude: null,
     error: null,
   });
+
+  const [gpsTracker, setGpsTracker] = useState(false);
+
+  const handleLocationPrecise = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setLocation({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            error: null,
+          });
+
+          setGpsTracker(true);
+          loadWeather(position.coords.latitude,position.coords.longitude );
+        },
+        (error) => {
+          setLocation({
+            latitude: null,
+            longitude: null,
+            error: error.message,
+          });
+        }
+      );
+    } else {
+      setLocation({
+        latitude: null,
+        longitude: null,
+        error: 'Geolocation is not supported by this browser.',
+      });
+    }
+  }
+
+  const getCityByIp = async () => {
+    console.log("getting ip");
+    const ipResponse = getUserLocation();
+
+    setSelectedCity(await ipResponse);
+  }
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -75,34 +114,9 @@ export default function Home() {
 
   useEffect(() => {
 
-    
+    getCityByIp();
 
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setLocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
-            error: null,
-          });
 
-          loadWeather(position.coords.latitude,position.coords.longitude );
-        },
-        (error) => {
-          setLocation({
-            latitude: null,
-            longitude: null,
-            error: error.message,
-          });
-        }
-      );
-    } else {
-      setLocation({
-        latitude: null,
-        longitude: null,
-        error: 'Geolocation is not supported by this browser.',
-      });
-    }
 
     
   }, []);
@@ -117,9 +131,18 @@ export default function Home() {
           <div id='menuButton' className="flex w-full items-end justify-end">
 
             <div>
+              <Button aria-label="Options" sx={{ borderRadius: '72px', height: '64px' }} onClick={() => handleLocationPrecise()}>
+                
+                {!gpsTracker && <GpsNotFixed className="text-primary-600" sx={{ width: '32px', height: '32px' }}/>}
+
+                {gpsTracker && <GpsFixed className="text-primary-600" sx={{ width: '32px', height: '32px' }}/>}
+              </Button>
+              
               <Button aria-label="Options" sx={{ borderRadius: '72px', height: '64px' }} onClick={(e) => handleClick(e)}>
                 <MoreVert className="text-primary-600" sx={{ width: '32px', height: '32px' }}/>
               </Button>
+            
+              
               <Menu anchorEl={anchorEl} open={openMore} onClose={() => setOpenMore(false)}>
                 <MenuItem onClick={(e) => {setOpenCity(true); setOpenMore(false) }}>Change City</MenuItem>
 

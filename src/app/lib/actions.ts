@@ -2,6 +2,7 @@
 
 import { fetchWeatherApi } from 'openmeteo';
 import { City, CurrentData, DayData, HourData, NewWeather, Weather, WeatherCompleteData, WeatherReadble } from './definitions';
+import { headers } from 'next/headers';
 
 import dotenv from "dotenv";
 
@@ -280,4 +281,28 @@ export async function getWeatherData(latitude : number = 0, longitude : number =
 
 
 
+export async function getUserLocation(): Promise<City | undefined> {
+  const apiKey = process.env.NEXT_PUBLIC_IPGEOLOCATION_APIKEY;
+  if (!apiKey) return undefined;
 
+  // First, fetch the real user IP!
+  const ipRes = await fetch('https://api.ipgeolocation.io/getip');
+  const ipData = await ipRes.json();
+  const ip = ipData.ip;
+
+  console.log(`IP is ${ip}`);
+
+  const url = `https://api.ipgeolocation.io/ipgeo?apiKey=${apiKey}&ip=${ip}&fields=city,latitude,longitude,state_prov`;
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  const { city, latitude, longitude, state_prov } = data;
+
+  return {
+    adminName1: state_prov,
+    name: city,
+    lat: latitude,
+    lng: longitude,
+  };
+}
