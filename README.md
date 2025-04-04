@@ -18,9 +18,10 @@ npm install
 ```
 
 2. Create a .env file with this entries:
+```bash
 NEXT_PUBLIC_GEONAMES_USERNAME=your_geonames_username
 NEXT_PUBLIC_GEOAPIFY_APIKEY=yourgeoapify_apikey
-
+```
 
 3. Run the development server:
 
