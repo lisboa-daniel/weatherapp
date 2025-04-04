@@ -108,22 +108,20 @@ export default function Home() {
   }, []);
 
   return (
-    <main className={`flex flex-col bg-gradient-to-br to-white/10 from-white/30 rounded-xl h-[98dvh] justify-between  border-[#f3f8fb] border-[1px] overflow-y-auto overflow-x-clip m-2 md:m-0 transition-opacity ease-in duration-700 ${true ? "opacity-100" : "opacity-0"}`} style={{
-      scrollSnapType: 'y mandatory'
+    <main className={`flex flex-col bg-gradient-to-br to-white/10 from-white/30 rounded-xl h-[98dvh] justify-between  border-[#f3f8fb] border-[1px] overflow-y-clip overflow-x-clip m-2 md:m-0 transition-opacity ease-in duration-700 ${true ? "opacity-100" : "opacity-0"}`} style={{
+     
     }}>
       <FindCityModal handleSetCity={setSelectedCity} handleClose={() => setOpenCity(false)} open={openCity} />
       <div id='maincontent' className="flex flex-col justify-between items-center snap-start min-h-dvh ">
         <div className="flex flex-col justify-between items-center bg-gradient-to-br to-white/20 from-white/40 rounded-xl p-2 w-full border-white drop-shadow-[0_4px_4px_rgba(28,69,108,0.5)] border-b-[1px]">
           <div id='menuButton' className="flex w-full items-end justify-end">
-            <Button aria-label="Add a City" sx={{ borderRadius: '72px', height: '64px' }}>
-              <Add className="text-primary-600" sx={{ width: '32px', height: '32px' }}/>
-            </Button>
+
             <div>
               <Button aria-label="Options" sx={{ borderRadius: '72px', height: '64px' }} onClick={(e) => handleClick(e)}>
                 <MoreVert className="text-primary-600" sx={{ width: '32px', height: '32px' }}/>
               </Button>
               <Menu anchorEl={anchorEl} open={openMore} onClose={() => setOpenMore(false)}>
-                <MenuItem onClick={() => setOpenCity(true)}>Change City</MenuItem>
+                <MenuItem onClick={(e) => {setOpenCity(true); setOpenMore(false) }}>Change City</MenuItem>
 
               </Menu>
             </div>
@@ -213,40 +211,8 @@ export default function Home() {
           
           {/*!isLoading && <HourlyGraph/>*/}
         
-          <ArrowDropDownRounded className="text-primary-600" sx={{ width:'64px', height:'64px'}}/>
-        </div>
-
-        <div className="flex flex-col w-full items-center justify-center snap-start p-2">
-            <div className="flex flex-row">
-              <span className="bg-white w-[164px] h-[128px] rounded-2xl m-2"/>
-              <span className="bg-white w-[164px] h-[128px] rounded-2xl m-2"/>
-            </div>
-            
-            <div className="flex flex-row">
-              <span className="bg-white w-[164px] h-[128px] rounded-2xl m-2"/>
-              <span className="bg-white w-[164px] h-[128px] rounded-2xl m-2"/>
-            </div>
-
-            <div className="flex flex-row">
-              <span className="bg-white w-[164px] h-[128px] rounded-2xl m-2"/>
-              <span className="bg-white w-[164px] h-[128px] rounded-2xl m-2"/>
-            </div>
-            <div className="flex flex-row">
-              <span className="bg-white w-[164px] h-[128px] rounded-2xl m-2"/>
-              <span className="bg-white w-[164px] h-[128px] rounded-2xl m-2"/>
-            </div>
-            <div className="flex flex-row">
-              <span className="bg-white w-[164px] h-[128px] rounded-2xl m-2"/>
-              <span className="bg-white w-[164px] h-[128px] rounded-2xl m-2"/>
-            </div>
-            <div className="flex flex-row">
-              <span className="bg-white w-[164px] h-[128px] rounded-2xl m-2"/>
-              <span className="bg-white w-[164px] h-[128px] rounded-2xl m-2"/>
-            </div>
-        </div>
-       
-    
-      
+          <ArrowDropDownRounded className="text-transparent" sx={{ width:'64px', height:'64px'}}/>
+        </div>     
      
     </main>
   );
