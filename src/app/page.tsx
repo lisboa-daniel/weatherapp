@@ -129,7 +129,7 @@ export default function Home() {
 
         
           <div id='cityInfo' className="flex flex-col">
-          <div onClick={() => setOpenCity(true)}>
+          <div className="hover:bg-white/50 p-2 rounded-xl cursor-pointer" onClick={() => setOpenCity(true)}>
         
               <div className="flex flex-row"> 
                 <LocationOn className="text-primary-600" sx={{ width: '36px', height: '36px' }}/> 
