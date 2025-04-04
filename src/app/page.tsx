@@ -1,18 +1,15 @@
 'use client';
 
-import { Add, Air, ArrowDropDown, ArrowDropDownRounded, LocationOn, MoreVert, Thunderstorm, WaterDropOutlined } from "@mui/icons-material";
+import { Air, ArrowDropDownRounded, LocationOn, MoreVert, Thunderstorm, WaterDropOutlined } from "@mui/icons-material";
 import { Button, CircularProgress, Divider, Menu, MenuItem } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useWeather } from "./context/weatherContext";
-import { getLocNames, getData, getWeatherData } from "./lib/actions";
+import { getGeoUsername, getLocNames,  getWeatherData } from "./lib/actions";
 import { getWeatherIcon } from "./lib/weatherIcons";
-import { getDateComponents, getTodayFormated } from "./lib/utils";
+import { getTodayFormated } from "./lib/utils";
 import { City, WeatherPlace } from "./lib/definitions";
 import FindCityModal from "./ui/findCityModal";
-import { Poppins } from "next/font/google";
-import HourlyGraph from "./ui/hourlyGraph";
 
-const normalFont = Poppins({weight: '400', subsets: ['latin-ext']});
 
 
 export default function Home() {
@@ -52,11 +49,11 @@ export default function Home() {
 
   const loadWeather = async (latitude : number = 0, longitude : number=0) => {
     setIsLoading(true);
-    const fetchedData = await getData(latitude, longitude);
-    const fetchedData2 = await getWeatherData(latitude, longitude);
+    // const fetchedData = await getData(latitude, longitude);
+    const fetchedData = await getWeatherData(latitude, longitude);
     const fetchlocName = await getLocNames(latitude, longitude);
 
-
+    console.log(await getGeoUsername());
     // fetchedData.array.hourly.time.forEach((item: Date) => {
     //   console.log(item.getHours());
     // });
@@ -64,7 +61,7 @@ export default function Home() {
     
 
     setLocName(fetchlocName);
-    setData(fetchedData2);
+    setData(fetchedData);
  
     
     setIsLoading(false);
@@ -77,6 +74,9 @@ export default function Home() {
   }, [selectedCity]);
 
   useEffect(() => {
+
+    
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {

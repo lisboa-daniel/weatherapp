@@ -1,9 +1,14 @@
+'use server';
+
 import { fetchWeatherApi } from 'openmeteo';
 import { City, CurrentData, DayData, HourData, NewWeather, Weather, WeatherCompleteData, WeatherReadble } from './definitions';
 
 import dotenv from "dotenv";
 
-
+export async function getGeoUsername() {
+  console.log("server env test:", process.env.GEONAMES_USERNAME);
+  return process.env.GEONAMES_USERNAME;
+}
 
 const params = {
 	"latitude": -23.669312,
@@ -23,9 +28,7 @@ const range = (start: number, stop: number, step: number) =>
 export async function searchCity(q: string, country: string) {
   try {
 
-    dotenv.config();
-    console.log("ENV:", process.env);
-    const GEONAMES_USERNAME = 'weatherapp_verycool';
+    const GEONAMES_USERNAME =  process.env.NEXT_PUBLIC_GEONAMES_USERNAME;
     
     console.log(`http://api.geonames.org/searchJSON?q=${encodeURIComponent(q)}&maxRows=10&username=${GEONAMES_USERNAME}&country=${encodeURIComponent(country)}`);
 
