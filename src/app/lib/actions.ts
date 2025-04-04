@@ -64,7 +64,7 @@ export async function searchCity(q: string, country: string) {
 
 export async function getLocNames(latitude: number = 0, longitude: number = 0): Promise<{ city: string, country: string  } | undefined> {
     try {
-      const apiKey = 'a2d63b4294cf40eabf1589bc823da32d'; // Replace with your actual API key if needed
+      const apiKey = process.env.NEXT_PUBLIC_GEOAPIFY_APIKEY; // Replace with your actual API key if needed
       const apiUrl = `https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&apiKey=${apiKey}`;
   
       const response = await fetch(apiUrl, { method: 'GET' });
