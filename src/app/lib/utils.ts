@@ -1,4 +1,6 @@
 import date from 'date-and-time';
+import { Countries } from '@/app/lib/countries';
+import { Country } from "@/app/lib/definitions"
 
 export function getDateComponents(date: Date = new Date()): {
     day: number;
@@ -64,4 +66,19 @@ export function getTodayFormated(){
   //let minutes = (minute >= 0 && minute <= 9) ? `0${minute}` : minute;
   let minutes = 0;
   return today.dayOfWeek + ", " + today.day + getDaySufix(today.day) + ' ' + today.month + ' ' + date.format(todayDate, 'HH:mm', false); 
+}
+
+
+
+export function getCountriesList() : Country[] {
+  let result : Country[] = [];
+
+  Countries.forEach(c => {
+    result.push({
+      name: c.Country,
+      code : c.fips
+    })
+  });
+
+  return result;
 }

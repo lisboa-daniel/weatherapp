@@ -7,7 +7,7 @@ import { useWeather } from "./context/weatherContext";
 import { getLocNames, getData, getWeatherData } from "./lib/actions";
 import { getWeatherIcon } from "./lib/weatherIcons";
 import { getDateComponents, getTodayFormated } from "./lib/utils";
-import { WeatherPlace } from "./lib/definitions";
+import { City, WeatherPlace } from "./lib/definitions";
 import FindCityModal from "./ui/findCityModal";
 import { Poppins } from "next/font/google";
 import HourlyGraph from "./ui/hourlyGraph";
@@ -29,7 +29,7 @@ export default function Home() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   
   const [openCity, setOpenCity] = useState(false);
-  
+  const [selectedCity, setSelectedCity] = useState<City>();
 
 
   const [locName, setLocName] = useState<{city : string, country : string } | undefined> (undefined);
@@ -44,6 +44,11 @@ export default function Home() {
     setAnchorEl(event.currentTarget);
     setOpenMore(true);
   };
+
+  const handleSelectCity = async () => {
+    setIsLoading(true);
+    loadWeather(selectedCity?.lat, selectedCity?.lng);
+  }
 
   const loadWeather = async (latitude : number = 0, longitude : number=0) => {
     setIsLoading(true);
@@ -64,6 +69,12 @@ export default function Home() {
     
     setIsLoading(false);
   };
+
+  useEffect( () => {
+    if (selectedCity)
+      handleSelectCity();
+
+  }, [selectedCity]);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -100,7 +111,7 @@ export default function Home() {
     <main className={`flex flex-col bg-gradient-to-br to-white/10 from-white/30 rounded-xl h-[98dvh] justify-between  border-[#f3f8fb] border-[1px] overflow-y-auto overflow-x-clip m-2 md:m-0 transition-opacity ease-in duration-700 ${true ? "opacity-100" : "opacity-0"}`} style={{
       scrollSnapType: 'y mandatory'
     }}>
-      <FindCityModal handleClose={() => setOpenCity(false)} open={openCity} />
+      <FindCityModal handleSetCity={setSelectedCity} handleClose={() => setOpenCity(false)} open={openCity} />
       <div id='maincontent' className="flex flex-col justify-between items-center snap-start min-h-dvh ">
         <div className="flex flex-col justify-between items-center bg-gradient-to-br to-white/20 from-white/40 rounded-xl p-2 w-full border-white drop-shadow-[0_4px_4px_rgba(28,69,108,0.5)] border-b-[1px]">
           <div id='menuButton' className="flex w-full items-end justify-end">
@@ -112,9 +123,8 @@ export default function Home() {
                 <MoreVert className="text-primary-600" sx={{ width: '32px', height: '32px' }}/>
               </Button>
               <Menu anchorEl={anchorEl} open={openMore} onClose={() => setOpenMore(false)}>
-                <MenuItem onClick={() => setOpenMore(false)}>Profile</MenuItem>
-                <MenuItem onClick={() => setOpenMore(false)}>My account</MenuItem>
-                <MenuItem onClick={() => setOpenMore(false)}>Logout</MenuItem>
+                <MenuItem onClick={() => setOpenCity(true)}>Change City</MenuItem>
+
               </Menu>
             </div>
           </div>
@@ -127,7 +137,7 @@ export default function Home() {
                 <LocationOn className="text-primary-600" sx={{ width: '36px', height: '36px' }}/> 
                 <p className="text-primary-600 text-3xl font-extrabold">{
                 
-                (locName==undefined) ? 'Searching...' : locName.city + ", " + locName.country
+                (locName==undefined || isLoading) ? 'Searching...' : locName.city + ", " + locName.country
                 
                 }</p>
               </div>

@@ -1,6 +1,10 @@
 import { fetchWeatherApi } from 'openmeteo';
-import { CurrentData, DayData, HourData, NewWeather, Weather, WeatherCompleteData, WeatherReadble } from './definitions';
-	
+import { City, CurrentData, DayData, HourData, NewWeather, Weather, WeatherCompleteData, WeatherReadble } from './definitions';
+
+import dotenv from "dotenv";
+
+
+
 const params = {
 	"latitude": -23.669312,
 	"longitude": -46.461332,
@@ -14,6 +18,46 @@ const url = "https://api.open-meteo.com/v1/forecast";
 const range = (start: number, stop: number, step: number) =>
 	Array.from({ length: (stop - start) / step }, (_, i) => start + i * step);
 
+
+
+export async function searchCity(q: string, country: string) {
+  try {
+
+    dotenv.config();
+    console.log("ENV:", process.env);
+    const GEONAMES_USERNAME = 'weatherapp_verycool';
+    
+    console.log(`http://api.geonames.org/searchJSON?q=${encodeURIComponent(q)}&maxRows=10&username=${GEONAMES_USERNAME}&country=${encodeURIComponent(country)}`);
+
+    const response = await fetch(
+      `http://api.geonames.org/searchJSON?q=${encodeURIComponent(q)}&maxRows=10&username=${GEONAMES_USERNAME}&country=${encodeURIComponent(country)}`
+    );
+
+
+
+    if (!response.ok) {
+      throw new Error(`API request failed with status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    let results : City[] = []
+    data.geonames.forEach((value : any) => {
+        results.push(
+          {
+            adminName1: value.adminName1,
+            name : value.name,
+            lat: value.lat,
+            lng: value.lng
+          }
+        )
+    });
+
+    return results;
+
+  } catch (err) {
+    throw err;
+  }
+}
 
 export async function getLocNames(latitude: number = 0, longitude: number = 0): Promise<{ city: string, country: string  } | undefined> {
     try {

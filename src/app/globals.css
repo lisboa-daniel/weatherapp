@@ -25,6 +25,7 @@
   --color-primary-700: oklch(33.231% 0.09464 263.24);
   --color-primary-800: oklch(25.996% 0.07965 268.39);
   --color-primary-900: oklch(19.004% 0.05983 273.58);
+  
   --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
   /* ... */

@@ -91,3 +91,15 @@ export type CurrentData = {
     rain : number
     precipitation_probability : number
 }
+
+export interface Country  {
+    name : string,
+    code : string,
+}
+
+export interface City {
+    adminName1: string,
+    name : string,
+    lat: number,
+    lng: number
+}

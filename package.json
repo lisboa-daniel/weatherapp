@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -17,6 +17,7 @@
     "@mui/x-charts": "^7.28.0",
     "@svgr/webpack": "^8.1.0",
     "date-and-time": "^3.6.0",
+    "dotenv": "^16.4.7",
     "next": "15.2.3",
     "openmeteo": "^1.2.0",
     "react": "^19.0.0",
