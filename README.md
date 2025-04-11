@@ -21,7 +21,7 @@ npm install
 ```bash
 NEXT_PUBLIC_GEONAMES_USERNAME=your_geonames_username
 NEXT_PUBLIC_GEOAPIFY_APIKEY=yourgeoapify_apikey
-NEXT_PUBLIC_IPGEOLOCATION_APIKEY=yout_geolocation_apikey
+NEXT_PUBLIC_IPGEOLOCATION_APIKEY=your_geolocation_apikey
 ```
 
 3. Run the development server:
