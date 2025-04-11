@@ -127,7 +127,7 @@ export default function Home() {
     }}>
       <FindCityModal handleSetCity={setSelectedCity} handleClose={() => setOpenCity(false)} open={openCity} />
       <div id='maincontent' className="flex flex-col justify-between items-center snap-start min-h-dvh ">
-        <div className="flex flex-col justify-between items-center bg-gradient-to-br to-white/20 from-white/40 rounded-xl p-2 w-full border-white drop-shadow-[0_4px_4px_rgba(28,69,108,0.5)] border-b-[1px]">
+        <div className="flex flex-col justify-between items-center bg-gradient-to-br to-white/20 from-white/40 rounded-xl pl-2 pr-2 pt-2 w-full border-white drop-shadow-[0_4px_4px_rgba(28,69,108,0.5)] border-b-[1px]">
           <div id='menuButton' className="flex w-full items-end justify-end">
 
             <div>
@@ -152,7 +152,7 @@ export default function Home() {
 
         
           <div id='cityInfo' className="flex flex-col">
-          <div className="hover:bg-white/50 p-2 rounded-xl cursor-pointer" onClick={() => setOpenCity(true)}>
+          <div className="hover:bg-white/50 pr-2 pl-2 rounded-xl cursor-pointer" onClick={() => setOpenCity(true)}>
         
               <div className="flex flex-row"> 
                 <LocationOn className="text-primary-600" sx={{ width: '36px', height: '36px' }}/> 
@@ -189,7 +189,7 @@ export default function Home() {
           </div>
 
 
-          <div id='weatherdatail' className="rounded-4xl w-full flex flex-row bg-gradient-to-br to-white/40 from-white/80 p-1 justify-center items-center mt-8 drop-shadow-[0_8px_8px_rgba(28,69,108,0.25)] border-t-[2px] border-[1px] border-white mb-2">
+          <div id='weatherdatail' className="rounded-4xl w-full flex flex-row bg-gradient-to-br to-white/40 from-white/80 p-1 justify-center items-center mt-2 drop-shadow-[0_8px_8px_rgba(28,69,108,0.25)] border-t-[2px] border-[1px] border-white mb-2">
             <span className="flex flex-col pl-4 pr-4 pt-1 pb-1 text-primary-600 justify-center items-center">
               <WaterDropOutlined sx={{ width: '32px', height: '32px' }}/>
               <p className="font-bold">{data?.current.relativeHumidity2m}%</p>
@@ -212,11 +212,11 @@ export default function Home() {
 
 
           <div id="sevendayforecast" className="flex flex-col w-full">
-            <p className="text-left md:text-center w-full md:ml-0 ml-4 font-extrabold text-primary-600 mt-2 mb-2">7-Day Forecast</p>
+            <p className="text-left md:text-center w-full md:ml-0 ml-4 font-extrabold text-primary-600">7-Day Forecast</p>
             <div className="w-full flex flex-col p-2 overflow-x-auto justify-start items-start md:justify-center md:items-center">
               <div className="flex flex-row flex-nowrap">
                 {data?.daily.map((value, index) => (
-                  <span key={index} className={`flex flex-col p-2 mr-2 bg-gradient-to-t to-primary-700 from-primary-400 rounded-xl justify-center items-center text-white drop-shadow-[0_4px_4px_rgba(28,69,108,0.75)]  ${(today == value.time.getUTCDay()) ?  'border-amber-300 border-[4px]':'border-[1px] border-primary-200  border-t-[2px]'}`}>
+                  <span key={index} className={`flex flex-col pl-2 pr-2 mr-2 bg-gradient-to-t to-primary-700 from-primary-400 rounded-xl justify-center items-center text-white drop-shadow-[0_4px_4px_rgba(28,69,108,0.75)]  ${(today == value.time.getUTCDay()) ?  'border-amber-300 border-[4px]':'border-[1px] border-primary-200  border-t-[2px]'}`}>
                     <p className="font-extrabold text-primary-300">{weekday[value.time.getUTCDay()]}</p>
                     {/* <Thunderstorm sx={{ width: '2rem', height: '2rem' }}/> */}
                     <img className="drop-shadow-[1_8px_8px_rgba(11,87,208,1)]" 
