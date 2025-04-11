@@ -8,7 +8,7 @@ Also a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app
 Weather info is powered by [Open Meteo](https://open-meteo.com/) a free open source weather API
 City names searched by latitude and longitude is powered by [GeoApify](https://www.geoapify.com/) API with free tier plan
 City search engine is powered by [Geonames](https://www.geonames.org/) free API 
-
+In order to use IP based location it was used [IP Geolocation API](https://ipgeolocation.io/ip-location-api.html) on free Tier
 
 ## Guide to run this
 1. Clone the repo and install the dependencies:
@@ -21,6 +21,7 @@ npm install
 ```bash
 NEXT_PUBLIC_GEONAMES_USERNAME=your_geonames_username
 NEXT_PUBLIC_GEOAPIFY_APIKEY=yourgeoapify_apikey
+NEXT_PUBLIC_IPGEOLOCATION_APIKEY=yout_geolocation_apikey
 ```
 
 3. Run the development server:
@@ -38,4 +39,4 @@ bun dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Demo
-A demo page is deployed at vercel in [WeatherApp](https:myverycoolweatherapp.vercel.app)
+A demo page is deployed at vercel in [WeatherApp](https://weatherapp-l2ch.vercel.app/) 
