@@ -23,6 +23,7 @@ const style = {
   bgcolor: 'background.paper',
   borderRadius: '12px',
   boxShadow: 24,
+  outline: 'none',
   p: 4,
 };
 
@@ -42,7 +43,7 @@ export default function FindCityModal( {open, handleClose, handleSetCity} : Find
   const [country, setCountry] = useState(0);
   const [loading, setLoading] = useState(false);
 
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState<string>("");
   const [qCities, setQCities] = useState<City[]> ([]);
 
   const debounceTimeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -128,7 +129,7 @@ export default function FindCityModal( {open, handleClose, handleSetCity} : Find
 
             { loading && <LinearProgress className='mt-2 mb-2'/>}
 
-            {(qCities.length == 0 && !loading) && <p>Results not found, try other query</p>}
+            {(qCities.length == 0 && !loading && city!="") && <p>Results not found, try other query</p>}
           </div>
         </Box>
       </Modal>
